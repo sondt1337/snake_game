@@ -9,6 +9,6 @@ You will need to install python on your machine. You can download python from th
 ## How to run the Script:
     python ransanmoi.py
     
-## Authon Name:
+## Author:
 Son Dinh Thai
     
