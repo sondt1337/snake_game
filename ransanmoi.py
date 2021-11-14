@@ -1,6 +1,5 @@
 import pygame
 import random
-
 pygame.init()
 #color
 black = (0, 0, 0)
@@ -14,26 +13,22 @@ dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('game rác')
 clock = pygame.time.Clock()
 #snake_1
-snake_block = 10
-snake_speed = 15
+snake_block = 10 
+snake_speed = 10 #speedsnake
 #font
 font_style = pygame.font.SysFont("bahnschrift", 45)
 score_font = pygame.font.SysFont("time new roman", 100)
 #score
 def Your_score(score):
-    value = score_font.render("" + str(score), True, green)
+    value = score_font.render(" " + str(score), True, green)
     dis.blit(value, [0, 0])
-
 #snake_2
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
-
-
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
-
 #loopbyq
 def gameLoop():
     game_over = False
@@ -75,7 +70,6 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     y1_change = snake_block
                     x1_change = 0
-
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
         x1 += x1_change
@@ -103,6 +97,5 @@ def gameLoop():
         clock.tick(snake_speed)
     pygame.quit()
     quit()
-
-
+    
 gameLoop()
