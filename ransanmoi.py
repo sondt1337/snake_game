@@ -2,33 +2,33 @@ import pygame
 import random
 pygame.init()
 #color
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (213, 50, 80)
-green = (0, 255, 0)
+bl = (0, 0, 0)
+wh = (255, 255, 255)
+gr = (0, 255, 0)
+re = (213, 50, 80)
 #display
 dis_width = 900
 dis_height = 600
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('game rác')
 clock = pygame.time.Clock()
-#snake_1
-snake_block = 10 
-snake_speed = 10 #speedsnake
-#font
+#snake_1 (speed & size)
+ran_block = 10 
+ran_tocdo = 20 #speedsnake
+#font in game 
+diem_font = pygame.font.SysFont("time new roman", 100)
 font_style = pygame.font.SysFont("bahnschrift", 45)
-score_font = pygame.font.SysFont("time new roman", 100)
-#score
-def Your_score(score):
-    value = score_font.render(" " + str(score), True, green)
+#score in game
+def Diem(diem):
+    value = diem_font.render(" " + str(diem), True, gr)
     dis.blit(value, [0, 0])
-#snake_2
-def our_snake(snake_block, snake_list):
-    for x in snake_list:
-        pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
+#snake_2 (setting)
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
+def our_ran(ran_block, ran_list):
+    for x in ran_list:
+        pygame.draw.rect(dis, wh, [x[0], x[1], ran_block, ran_block])
 #loopbyq
 def gameLoop():
     game_over = False
@@ -37,65 +37,62 @@ def gameLoop():
     y1 = dis_height / 2
     x1_change = 0
     y1_change = 0
-    snake_List = []
-    Length_of_snake = 1
-    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    ran_List = []
+    Length_of_ran = 1
+    moix = round(random.randrange(0, dis_width - ran_block) / 10) * 10
+    moiy = round(random.randrange(0, dis_height - ran_block) / 10) * 10
     while not game_over:
         while game_close == True:
-            dis.fill(black)
-            message("R - chơi lại hoặc Q - thoát!!!!", white)
-            Your_score(Length_of_snake - 1)
+            dis.fill(bl)
+            message("R - chơi lại hoặc Q - thoát!!!!", wh)
+            Diem(Length_of_ran - 1)
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
+                    if event.key == pygame.K_q: #press q 
                         game_over = True
                         game_close = False
-                    if event.key == pygame.K_r:
+                    if event.key == pygame.K_r: #press r
                         gameLoop()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    x1_change = -snake_block
+                if event.key == pygame.K_LEFT: #press LEFT key
+                    x1_change = -ran_block
                     y1_change = 0
-                elif event.key == pygame.K_RIGHT:
-                    x1_change = snake_block
+                elif event.key == pygame.K_RIGHT: #press RIGHT key
+                    x1_change = ran_block
                     y1_change = 0
-                elif event.key == pygame.K_UP:
-                    y1_change = -snake_block
+                elif event.key == pygame.K_UP: #press UP key
+                    y1_change = -ran_block
                     x1_change = 0
-                elif event.key == pygame.K_DOWN:
-                    y1_change = snake_block
+                elif event.key == pygame.K_DOWN: #press DOWN key
+                    y1_change = ran_block
                     x1_change = 0
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        dis.fill(black)
-        pygame.draw.rect(dis, red, [foodx, foody, snake_block, snake_block])
-        snake_Head = []
-        snake_Head.append(x1)
-        snake_Head.append(y1)
-        snake_List.append(snake_Head)
-        if len(snake_List) > Length_of_snake:
-            del snake_List[0]
-        for x in snake_List[:-1]:
-            if x == snake_Head:
+        dis.fill(bl)
+        pygame.draw.rect(dis, re, [moix, moiy, ran_block, ran_block])
+        ran_Head = []
+        ran_Head.append(x1)
+        ran_Head.append(y1)
+        ran_List.append(ran_Head)
+        if len(ran_List) > Length_of_ran:
+            del ran_List[0]
+        for x in ran_List[:-1]:
+            if x == ran_Head:
                 game_close = True
-        our_snake(snake_block, snake_List)
-        Your_score(Length_of_snake - 1)
+        our_ran(ran_block, ran_List)
+        Diem(Length_of_ran - 1)
         pygame.display.update()
-        if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(
-                0, dis_width - snake_block) / 10.0) * 10.0
-            foody = round(random.randrange(
-                0, dis_height - snake_block) / 10.0) * 10.0
-            Length_of_snake += 1
-        clock.tick(snake_speed)
+        if x1 == moix and y1 == moiy:
+            moix = round(random.randrange(0, dis_width - ran_block) / 10) * 10
+            moiy = round(random.randrange(0, dis_height - ran_block) / 10) * 10
+            Length_of_ran += 1 #eat moi
+        clock.tick(ran_tocdo)
     pygame.quit()
     quit()
-    
 gameLoop()
