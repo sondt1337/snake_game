@@ -1,26 +1,30 @@
 import pygame
 import random
+
 pygame.init()
-white = (255, 255, 255)
+#color
 black = (0, 0, 0)
+white = (255, 255, 255)
 red = (213, 50, 80)
 green = (0, 255, 0)
+#display
 dis_width = 900
 dis_height = 600
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('game rác')
 clock = pygame.time.Clock()
+#snake_1
 snake_block = 10
 snake_speed = 15
+#font
 font_style = pygame.font.SysFont("bahnschrift", 45)
 score_font = pygame.font.SysFont("time new roman", 100)
-
-
+#score
 def Your_score(score):
     value = score_font.render("" + str(score), True, green)
     dis.blit(value, [0, 0])
 
-
+#snake_2
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
@@ -30,7 +34,7 @@ def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
 
-
+#loopbyq
 def gameLoop():
     game_over = False
     game_close = False
